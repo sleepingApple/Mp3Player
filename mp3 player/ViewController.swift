@@ -1,19 +1,80 @@
 //
 //  ViewController.swift
-//  mp3 player
+//  MP3 player
 //
-//  Created by Bluebutterfly on 2026-07-04.
+//  Created by Bluebutterfly on 2026-07-03.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate , UITableViewDataSource {
+    
+    @IBOutlet var table: UITableView!
+    
+    var songs = [Song]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureSongs()
         // Do any additional setup after loading the view.
+        table.delegate = self
+        table.dataSource = self
     }
-
-
+    
+    func configureSongs(){
+        songs.append(Song (name: "all_comes_crashing",
+                          albumName: "blank",
+                           artist: "Metric",
+                          imageName: "something",
+                          trackName: "all_comes_crashing"))
+        songs.append(Song (name: "dreams",
+                          albumName: "blank",
+                           artist: "Fleetwood mac",
+                          imageName: "something",
+                          trackName: "dreams"))
+        songs.append(Song (name: "roses",
+                          albumName: "blank",
+                           artist: "rozes, chainsmokers",
+                          imageName: "something",
+                          trackName: "roses"))
+    }
+    
+    
+    //table
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return songs.count
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = table.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        //configure
+        
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        //present the player
+        let position = indexPath.row
+        //songs
+        guard let vc = storyboard?.instantiateViewController(identifier: "player") else {
+            return
+        }
+        
+        present(vc, animated: true)
+        
+    }
 }
 
+struct Song {
+    let name: String
+    let albumName: String
+    let artist: String
+    let imageName: String
+    let trackName: String
+}
