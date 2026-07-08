@@ -49,9 +49,12 @@ class ViewController: UIViewController, UITableViewDelegate , UITableViewDataSou
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = table.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let song = songs[indexPath.row]
         
         //configure
         
+        cell.textLabel?.text =
+        cell.accessoryType = .disclosureIndicator
         return cell
         
     }
